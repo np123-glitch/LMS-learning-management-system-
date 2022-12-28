@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+      textarea{
+        resize: none;
+        background-color: #FFFFFF;
+        color: #000000;
+        padding: 25px;
+        margin: 25px;
+        font-family: verdana;
+        letter-spacing: 2px;
+        word-spacing: 2px;
+        border-radius: 8px;
+        box-shadow: 6px 6px 10px #800000;
+        border: 1px solid #000;
+      }
+      label{
+        font-family: verdana;
+      }
+      
+    </style>
+
+    <style>
+    table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.blueTable tbody td {
+  font-size: 13px;
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #D0E4F5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  border-top: 2px solid #444444;
+}
+table.blueTable tfoot td {
+  font-size: 14px;
+}
+table.blueTable tfoot .links {
+  text-align: right;
+}
+table.blueTable tfoot .links a{
+  display: inline-block;
+  background: #1C6EA4;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script>
+      
+      
+        function loadDoc(data, RW) {
+          data = {"id" : "{{ data }}"};
+          
+          if(data == undefined)
+          {
+         
+            alert("No studentid found.")
+          }
+          if (RW == undefined) {
+            RW = 'r'
+          }
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                onLoad(this.responseText);
+                }
+            xhttp.open("POST", "/test", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("data="+JSON.stringify(data)+ "&" + "action=" + RW);
+            
+            }
+
+        
+
+        function onLoad(msg)
+        {
+
+            obj = JSON.parse(msg);
+            ele = document.createElement('div');
+            document.getElementById("notes").appendChild(ele);
+            ele.setAttribute("style", "position:absolute; left:2350px; top:50px; font-family:georgia,garamond,serif; font-size:50px; border:10px solid dodgerblue;");
+            //ele.style = "font-family:georgia,garamond,serif; font-size:20px; postition:absolute; left:500px"
+            ele.innerHTML = ("Welcome " + obj['studentname']);
+            for (var key in obj) {
+                element = document.getElementById(key);
+                if (element == undefined) {
+                  element = document.createElement('textarea');
+                  document.getElementById("notes").appendChild(element)
+                }
+                element.setAttribute("id",  key)
+                element.setAttribute("readonly", true)
+                element.value = obj[key]
+                element.style = "font-family:georgia,garamond,serif; font-size:20px;"
+                }
+            }
+            
+      
+    
+          
+    </script>
+</head>
+<body onLoad=loadDoc()>
+    <p><label for="w3review">Lessons:</label></p>
+  <textarea id="w3review" name="nextlesson" rows="4" cols="50" readonly>Next lesson is on....</textarea>
+  <textarea id="w3review" name="schedule" rows="4" cols="50" readonly>I am available on all the days. Monday-After School to 4:30. Tuesday-After School to anytime. Wednesday-After School to 4:30. Thursday-After School to 6. Friday-After School to anytime. Weekends I am free anytime.</textarea>
+  <div style = "position:absolute; left:40px; top:220px; border:2px solid dodgerblue;">
+    ID
+ </div>
+ <div style = "position:absolute; left:365px; top:220px; font-family:georgia,garamond,serif; font-size:20px; border:2px solid dodgerblue;">
+  Name
+</div>
+<div style = "position:absolute; left:690px; top:220px; font-family:georgia,garamond,serif; font-size:20px; border:2px solid dodgerblue;">
+  Fees
+</div>
+  <div id="notes"></div> 
+  <div id="demo"></div>
+  
+  
+ </body>
+</body>
+</html>
